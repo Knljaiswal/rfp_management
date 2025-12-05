@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Compare Proposals</title>
+    <style>
+        body { font-family: sans-serif; max-width: 1000px; margin: 40px auto; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .score-high { color: green; font-weight: bold; }
+        .score-low { color: red; }
+    </style>
+</head>
+<body>
+    <a href="/">← Back to Dashboard</a>
+    <h1>⚖️ Vendor Comparison</h1>
+    <h3>Request: "{{ rfp.original_prompt }}"</h3>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Vendor</th>
+                <th>Total Price</th>
+                <th>Delivery</th>
+                <th>Warranty</th>
+                <th>AI Score (0-100)</th>
+                <th>AI Rationale</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in proposals %}
+            <tr>
+                <td><strong>{{ p.vendor.name }}</strong></td>
+                <td>{{ p.parsed_data.total_price }} {{ p.parsed_data.currency }}</td>
+                <td>{{ p.parsed_data.delivery_time }}</td>
+                <td>{{ p.parsed_data.warranty }}</td>
+                <td class="{% if p.ai_score > 80 %}score-high{% else %}score-low{% endif %}">
+                    {{ p.ai_score }}/100
+                </td>
+                <td>{{ p.ai_rationale }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No proposals received yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

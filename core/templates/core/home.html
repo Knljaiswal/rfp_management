@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RFP Dashboard</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+        .card { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .btn { display: inline-block; background-color: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;}
+    </style>
+</head>
+<body>
+    <h1>Procurement Dashboard</h1>
+    <a href="/create/" class="btn">+ New RFP</a>
+    <a href="/vendors/" class="btn" style="background-color: #6c757d;">Manage Vendors</a>
+    
+    <hr>
+    
+    {% for rfp in rfps %}
+        <div class="card">
+            <strong>Created:</strong> {{ rfp.created_at }}<br>
+            <strong>Status:</strong> {{ rfp.status }}<br>
+            <strong>Request:</strong> {{ rfp.original_prompt|truncatechars:100 }}
+            <br><br>
+            <a href="/rfp/{{ rfp.id }}/send/" style="color: blue;">🚀 Send to Vendors</a>
+            <a href="/rfp/{{ rfp.id }}/add-proposal/" style="color: purple; margin-left: 15px;">📥 Add Proposal</a>
+            <a href="/rfp/{{ rfp.id }}/compare/" style="color: darkorange; margin-left: 15px; font-weight: bold;">⚖️ Compare</a>
+        </div>
+    {% empty %}
+        <p>No RFPs found. Create one!</p>
+    {% endfor %}
+</body>
+</html>

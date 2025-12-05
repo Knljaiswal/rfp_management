@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Vendors</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+        .form-box { background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #ddd; }
+        input { padding: 8px; margin: 5px 0; width: 45%; }
+        button { background-color: #007bff; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
+    </style>
+</head>
+<body>
+    <a href="/">← Back to Dashboard</a>
+    <h1>Manage Vendors</h1>
+
+    <div class="form-box">
+        <h3>➕ Add New Vendor</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Company Name (e.g., Dell)" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <br>
+            <input type="text" name="description" placeholder="Description (e.g., Laptops & IT)" style="width: 92%;">
+            <br><br>
+            <button type="submit">Save Vendor</button>
+        </form>
+    </div>
+
+    <h3>Existing Vendors</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vendor in vendors %}
+            <tr>
+                <td>{{ vendor.name }}</td>
+                <td>{{ vendor.email }}</td>
+                <td>{{ vendor.description }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No vendors found. Add one above!</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
