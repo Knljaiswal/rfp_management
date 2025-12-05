@@ -1,33 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Send RFP</title>
-    <style>
-        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
-        .vendor-item { padding: 10px; border-bottom: 1px solid #eee; }
-        button { background-color: #28a745; color: white; padding: 10px 20px; border: none; cursor: pointer; margin-top: 20px;}
-    </style>
-</head>
-<body>
+{% extends 'core/base.html' %}
+
+{% block content %}
     <h1>🚀 Send RFP to Vendors</h1>
-    <p><strong>Request:</strong> {{ rfp.original_prompt }}</p>
+    <p>Select the vendors you wish to invite to bid on this project.</p>
 
-    <form method="POST">
-        {% csrf_token %}
-        <h3>Select Vendors:</h3>
-        
-        {% for vendor in vendors %}
-        <div class="vendor-item">
-            <input type="checkbox" name="vendors" value="{{ vendor.id }}" id="v{{ vendor.id }}">
-            <label for="v{{ vendor.id }}">
-                <strong>{{ vendor.name }}</strong> ({{ vendor.email }})
-            </label>
-        </div>
-        {% empty %}
-        <p>No vendors found! <a href="/vendors/">Add some first.</a></p>
-        {% endfor %}
+    <div class="card">
+        <h3>Request Summary</h3>
+        <p>"{{ rfp.original_prompt }}"</p>
+    </div>
 
-        <button type="submit">Send Emails</button>
-    </form>
-</body>
-</html>
+    <div class="card">
+        <form method="POST">
+            {% csrf_token %}
+            <h3 style="margin-top: 0;">Select Vendors</h3>
+            
+            {% for vendor in vendors %}
+            <div style="padding: 10px; border-bottom: 1px solid #eee; display: flex; align-items: center;">
+                <input type="checkbox" name="vendors" value="{{ vendor.id }}" id="v{{ vendor.id }}" style="width: auto; margin: 0 10px 0 0;">
+                <label for="v{{ vendor.id }}" style="cursor: pointer; width: 100%;">
+                    <strong>{{ vendor.name }}</strong> 
+                    <span style="color: #666; font-size: 0.9em;">({{ vendor.email }})</span>
+                </label>
+            </div>
+            {% empty %}
+            <p class="text-danger">No vendors found! Please add vendors first.</p>
+            {% endfor %}
+
+            <br>
+            <button type="submit" class="btn btn-success">Send Emails via SMTP</button>
+            <a href="/" class="btn btn-secondary" style="margin-left: 10px;">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

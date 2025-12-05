@@ -1,55 +1,43 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Manage Vendors</title>
-    <style>
-        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
-        .form-box { background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #ddd; }
-        input { padding: 8px; margin: 5px 0; width: 45%; }
-        button { background-color: #007bff; color: white; padding: 10px 20px; border: none; cursor: pointer; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
-    </style>
-</head>
-<body>
-    <a href="/">← Back to Dashboard</a>
+{% extends 'core/base.html' %}
+
+{% block content %}
     <h1>Manage Vendors</h1>
 
-    <div class="form-box">
+    <div class="card">
         <h3>➕ Add New Vendor</h3>
-        <form method="POST">
+        <form method="POST" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             {% csrf_token %}
             <input type="text" name="name" placeholder="Company Name (e.g., Dell)" required>
             <input type="email" name="email" placeholder="Email Address" required>
-            <br>
-            <input type="text" name="description" placeholder="Description (e.g., Laptops & IT)" style="width: 92%;">
-            <br><br>
-            <button type="submit">Save Vendor</button>
+            <input type="text" name="description" placeholder="Category (e.g., IT Hardware)" style="grid-column: span 2;">
+            
+            <div style="grid-column: span 2; margin-top: 10px;">
+                <button type="submit" class="btn btn-primary">Save Vendor</button>
+            </div>
         </form>
     </div>
 
-    <h3>Existing Vendors</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for vendor in vendors %}
-            <tr>
-                <td>{{ vendor.name }}</td>
-                <td>{{ vendor.email }}</td>
-                <td>{{ vendor.description }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="3">No vendors found. Add one above!</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+    <div class="card">
+        <h3>Existing Vendors</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vendor in vendors %}
+                <tr>
+                    <td><strong>{{ vendor.name }}</strong></td>
+                    <td>{{ vendor.email }}</td>
+                    <td>{{ vendor.description }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3">No vendors found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

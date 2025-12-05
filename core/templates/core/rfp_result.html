@@ -1,25 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>RFP Generated</title>
-    <style>
-        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
-        .json-box { background: #f4f4f4; padding: 15px; border-radius: 5px; font-family: monospace; }
-        .success { color: green; }
-    </style>
-</head>
-<body>
-    <h1 class="success">✅ RFP Created Successfully!</h1>
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <h1>✅ AI Parsing Complete</h1>
     
-    <h3>Original Request:</h3>
-    <p>"{{ rfp.original_prompt }}"</p>
-    
-    <h3>AI Extracted Data (Structured):</h3>
-    <div class="json-box">
-        <pre>{{ rfp.structured_data }}</pre>
+    <div class="card">
+        <h3>Original Request</h3>
+        <p style="font-style: italic; color: #555;">"{{ rfp.original_prompt }}"</p>
     </div>
 
-    <br>
-    <a href="/">Go to Dashboard</a>
-</body>
-</html>
+    <div class="card">
+        <h3>Extracted Structured Data</h3>
+        <p>Gemini identified the following requirements:</p>
+        
+        <div class="json-box">
+            <pre>{{ rfp.structured_data }}</pre>
+        </div>
+        
+        <br>
+        <a href="/" class="btn btn-primary">Save & Go to Dashboard</a>
+    </div>
+{% endblock %}

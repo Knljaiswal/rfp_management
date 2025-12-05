@@ -1,25 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create New RFP</title>
-    <style>
-        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
-        textarea { width: 100%; height: 150px; padding: 10px; margin-bottom: 20px; }
-        button { background-color: #007bff; color: white; padding: 10px 20px; border: none; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
-    </style>
-</head>
-<body>
+{% extends 'core/base.html' %}
+
+{% block content %}
     <h1>🤖 Create AI-Powered RFP</h1>
-    <p>Describe what you need in plain English (e.g., "I need 20 Dell laptops for the new Mumbai office").</p>
+    <p class="subtitle">Describe your needs in plain English. Gemini will handle the formatting.</p>
     
-    <form method="POST">
-        {% csrf_token %}
-        <textarea name="user_input" placeholder="Type your requirements here..."></textarea>
-        <br>
-        <button type="submit">Generate RFP Structure</button>
-    </form>
-    
-    <a href="/">Back to Home</a>
-</body>
-</html>
+    <div class="card">
+        <form method="POST">
+            {% csrf_token %}
+            <label><strong>Requirement Description:</strong></label>
+            <textarea name="user_input" placeholder="Example: I need 20 Dell laptops for the new Mumbai office. Budget is $50k. Need them by next Friday."></textarea>
+            
+            <button type="submit" class="btn btn-primary">Generate RFP Structure</button>
+            <a href="/" class="btn btn-secondary" style="margin-left: 10px;">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

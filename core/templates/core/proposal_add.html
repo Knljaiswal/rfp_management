@@ -1,31 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Process Vendor Reply</title>
-    <style>
-        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
-        textarea { width: 100%; height: 200px; padding: 10px; }
-        select { padding: 10px; width: 100%; margin-bottom: 20px; }
-        button { background-color: #6f42c1; color: white; padding: 10px 20px; border: none; cursor: pointer; }
-    </style>
-</head>
-<body>
+{% extends 'core/base.html' %}
+
+{% block content %}
     <h1>📧 Process Vendor Response</h1>
-    <p>Paste the email text received from a vendor. AI will extract the data.</p>
-    
-    <form method="POST">
-        {% csrf_token %}
-        <label><strong>Which Vendor sent this?</strong></label>
-        <select name="vendor_id">
-            {% for vendor in vendors %}
-            <option value="{{ vendor.id }}">{{ vendor.name }}</option>
-            {% endfor %}
-        </select>
-        
-        <label><strong>Paste Email Content:</strong></label>
-        <textarea name="email_text" placeholder="Hi, we can supply the 15 laptops for $42,000..."></textarea>
-        <br><br>
-        <button type="submit">⚡ Analyze with AI</button>
-    </form>
-</body>
-</html>
+    <p>Paste the raw email text below. The AI will extract pricing and delivery terms automatically.</p>
+
+    <div class="card">
+        <form method="POST">
+            {% csrf_token %}
+            
+            <label><strong>1. Which Vendor sent this?</strong></label>
+            <select name="vendor_id" required>
+                <option value="" disabled selected>-- Select Vendor --</option>
+                {% for vendor in vendors %}
+                <option value="{{ vendor.id }}">{{ vendor.name }}</option>
+                {% endfor %}
+            </select>
+            
+            <label><strong>2. Paste Email Content:</strong></label>
+            <textarea name="email_text" placeholder="Example: Hi, we can supply the items for $42,000. Delivery in 2 weeks..." required></textarea>
+            
+            <button type="submit" class="btn btn-primary" style="background-color: #7c3aed;">⚡ Analyze with AI</button>
+            <a href="/" class="btn btn-secondary" style="margin-left: 10px;">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

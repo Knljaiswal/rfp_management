@@ -1,32 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>RFP Dashboard</title>
-    <style>
-        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
-        .card { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
-        .btn { display: inline-block; background-color: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;}
-    </style>
-</head>
-<body>
-    <h1>Procurement Dashboard</h1>
-    <a href="/create/" class="btn">+ New RFP</a>
-    <a href="/vendors/" class="btn" style="background-color: #6c757d;">Manage Vendors</a>
-    
-    <hr>
-    
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1>Procurement Dashboard</h1>
+        <div>
+            <a href="/create/" class="btn btn-primary">+ New RFP</a>
+            <a href="/vendors/" class="btn btn-secondary">Manage Vendors</a>
+        </div>
+    </div>
+
     {% for rfp in rfps %}
         <div class="card">
-            <strong>Created:</strong> {{ rfp.created_at }}<br>
-            <strong>Status:</strong> {{ rfp.status }}<br>
-            <strong>Request:</strong> {{ rfp.original_prompt|truncatechars:100 }}
-            <br><br>
-            <a href="/rfp/{{ rfp.id }}/send/" style="color: blue;">🚀 Send to Vendors</a>
-            <a href="/rfp/{{ rfp.id }}/add-proposal/" style="color: purple; margin-left: 15px;">📥 Add Proposal</a>
-            <a href="/rfp/{{ rfp.id }}/compare/" style="color: darkorange; margin-left: 15px; font-weight: bold;">⚖️ Compare</a>
+            <h3 style="margin-top: 0;">RFP #{{ forloop.counter }}</h3>
+            <p><strong>Created:</strong> {{ rfp.created_at|date:"M d, Y" }}</p>
+            <p><strong>Status:</strong> 
+                {% if rfp.status == 'sent' %}<span class="text-success">Sent</span>
+                {% else %}<span style="color: #666;">Draft</span>{% endif %}
+            </p>
+            <p style="background: #f3f4f6; padding: 10px; border-radius: 4px;">"{{ rfp.original_prompt|truncatechars:120 }}"</p>
+            
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+            
+            <a href="/rfp/{{ rfp.id }}/send/" class="btn btn-link">🚀 Send to Vendors</a>
+            <a href="/rfp/{{ rfp.id }}/add-proposal/" class="btn btn-link" style="margin-left: 15px; color: purple;">📥 Add Proposal</a>
+            <a href="/rfp/{{ rfp.id }}/compare/" class="btn btn-link" style="margin-left: 15px; color: orange;">⚖️ Compare</a>
         </div>
     {% empty %}
-        <p>No RFPs found. Create one!</p>
+        <div class="card" style="text-align: center; padding: 50px;">
+            <h3>No RFPs yet.</h3>
+            <p>Click the button above to create your first AI-powered request.</p>
+        </div>
     {% endfor %}
-</body>
-</html>
+{% endblock %}
