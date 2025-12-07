@@ -70,8 +70,6 @@ Open your browser and navigate to: http://127.0.0.1:8080.
 
 📚 API & URL Structure
 
-The application follows a standard RESTful URL structure:
-
 Method
 
 Endpoint
@@ -88,7 +86,7 @@ POST
 
 /create/
 
-Create RFP: Sends user prompt to Gemini -> Saves structured RFP object.
+Create RFP: Sends user prompt to Gemini → Saves structured RFP object.
 
 GET
 
@@ -112,7 +110,7 @@ POST
 
 /rfp/<id>/add-proposal/
 
-Parser: Sends raw vendor email text to Gemini -> Saves structured Proposal object.
+Parser: Sends raw vendor email text to Gemini → Saves structured Proposal object.
 
 GET
 
