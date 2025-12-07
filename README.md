@@ -69,54 +69,7 @@ python manage.py runserver 8080
 Open your browser and navigate to: http://127.0.0.1:8080.
 
 📚 API & URL Structure
-
-Method
-
-Endpoint
-
-Description
-
-GET
-
-/
-
-Dashboard: Lists all RFPs, dates, and current status.
-
-POST
-
-/create/
-
-Create RFP: Sends user prompt to Gemini → Saves structured RFP object.
-
-GET
-
-/vendors/
-
-Vendor Manager: Lists existing vendors.
-
-POST
-
-/vendors/
-
-Add Vendor: Saves a new vendor to the MongoDB collection.
-
-POST
-
-/rfp/<id>/send/
-
-Emailer: Triggers SMTP dispatch to selected vendors.
-
-POST
-
-/rfp/<id>/add-proposal/
-
-Parser: Sends raw vendor email text to Gemini → Saves structured Proposal object.
-
-GET
-
-/rfp/<id>/compare/
-
-Comparison: Renders the side-by-side evaluation matrix.
+![Description of Image](Table.png)
 
 🧠 Design Decisions & Assumptions
 
